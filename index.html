@@ -1,1 +1,277 @@
-enter your code here
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>کتابخانه مدرسه</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#2d3270; --navy-2:#3a4088; --primary:#5b5fc7; --primary-soft:#e9e9fb;
+  --bg:#f6f5fa; --card:#fff; --text:#262a55; --muted:#8b8fa8; --green:#d9f4e6; --green-t:#1e8a5a;
+  --shadow:0 2px 10px rgba(45,50,112,.08); --radius:16px;
+}
+body.dark{--bg:#171a3a;--card:#222652;--text:#eceefe;--muted:#a3a7cc;--primary-soft:#31366f;--shadow:0 2px 10px rgba(0,0,0,.3)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Vazirmatn',Tahoma,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;display:flex}
+a{color:inherit;text-decoration:none}
+button{font-family:inherit;cursor:pointer;border:0}
+:focus-visible{outline:3px solid var(--primary);outline-offset:2px}
+img{display:block;max-width:100%}
+
+/* sidebar */
+.sidebar{width:146px;flex:none;background:var(--navy);color:#fff;padding:20px 12px;display:flex;flex-direction:column;align-items:center;position:sticky;top:0;height:100vh}
+.sidebar .logo{width:44px;height:44px;margin:4px 0 30px}
+.sidebar nav{width:100%;display:flex;flex-direction:column;gap:6px}
+.sidebar nav a{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:14px;font-size:13px;font-weight:500;transition:background .2s}
+.sidebar nav a img{width:22px;height:22px}
+.sidebar nav a:hover{background:rgba(255,255,255,.1)}
+.sidebar nav a.active{background:rgba(255,255,255,.16);font-weight:700}
+.side-note{margin-top:auto;text-align:center;font-size:12px;line-height:2;color:#e3e5ff;padding-bottom:10px}
+.side-note img{width:90px;margin:0 auto 14px;border-radius:12px;mix-blend-mode:lighten}
+
+/* main */
+.main{flex:1;min-width:0;padding:0 14px 20px}
+.topbar{display:flex;align-items:center;gap:18px;padding:14px 10px;background:var(--card);margin:0 -14px 14px;padding-inline:24px}
+.topbar .icon-btn{width:34px;height:34px;background:none;position:relative;display:grid;place-items:center}
+.topbar .icon-btn img{width:24px;height:24px}
+body.dark .topbar .icon-btn img{filter:invert(1)}
+.badge{position:absolute;top:0;left:0;background:#e5484d;color:#fff;font-size:9px;min-width:15px;height:15px;border-radius:8px;display:grid;place-items:center}
+.avatar{width:28px;height:28px;border-radius:50%;background:#f1c6d7;display:grid;place-items:center;font-size:15px}
+.topnav{display:flex;gap:6px;margin-inline-start:auto}
+.topnav a{padding:7px 14px;border-radius:12px;font-size:13px;font-weight:500}
+.topnav a.active{background:var(--primary);color:#fff}
+.topsearch{width:210px;height:34px;border-radius:17px;border:0;background:var(--bg);padding:0 14px;font-family:inherit;font-size:12px;color:var(--text)}
+
+section.panel{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px 24px;margin-bottom:16px}
+.panel-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.panel-head h2{display:flex;align-items:center;gap:8px;font-size:17px;font-weight:700}
+.panel-head h2 img{width:24px;height:24px}
+.see-all{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--primary);font-weight:500}
+.see-all img{width:12px;height:12px}
+
+/* hero */
+.hero{position:relative;border-radius:var(--radius);overflow:hidden;background:linear-gradient(100deg,#2d3270 0%,#3d4488 55%,#4a4e90 100%);color:#fff;min-height:245px;margin-bottom:16px;display:flex;align-items:center;padding:30px 50px 30px}
+.hero-text{position:relative;z-index:2;width:58%}
+.hero h1{font-size:30px;font-weight:800;display:flex;align-items:center;gap:12px;margin-bottom:6px}
+.hero h1 img{width:30px;height:30px}
+.underline{width:140px;height:6px;margin:0 0 14px 0}
+.hero p{font-size:15px;margin-bottom:22px;color:#e6e8ff}
+.hero form{display:flex;align-items:center;background:#fff;border-radius:30px;padding:5px 6px 5px 20px;max-width:470px;gap:10px}
+.hero form input{flex:1;border:0;outline:0;font-family:inherit;font-size:13px;color:#333;background:none;min-width:0;height:36px}
+.hero form button{width:46px;height:36px;border-radius:20px;background:var(--primary);display:grid;place-items:center;flex:none}
+.hero form button img{width:20px;height:20px}
+.hero-img{position:absolute;inset-block:0;left:0;width:44%;object-fit:cover;object-position:left center;
+  -webkit-mask-image:linear-gradient(to right,#000 70%,transparent);mask-image:linear-gradient(to right,#000 60%,transparent)}
+
+/* categories */
+.cats{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.cat{border-radius:14px;padding:18px 10px 14px;text-align:center;font-weight:700;font-size:14px;display:flex;flex-direction:column;align-items:center;gap:12px;border:1px solid rgba(0,0,0,.04);transition:transform .2s}
+.cat:hover{transform:translateY(-3px)}
+.cat img{width:48px;height:48px}
+.cat.pink{background:#fde8ef;color:#b53b72}.cat.green{background:#e0f4e7;color:#256b4d}.cat.yellow{background:#fff3d6;color:#a1710f}
+.cat.blue{background:#e1effd;color:#2a63a8}.cat.orange{background:#fdece3;color:#a64a28}.cat.purple{background:#ece6fb;color:#5b3ab0}
+
+/* books */
+.carousel{position:relative}
+.books{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding:4px 30px}
+.books::-webkit-scrollbar{display:none}
+.book{flex:0 0 calc(25% - 12px);min-width:180px;scroll-snap-align:start;background:var(--card);border-radius:14px;box-shadow:var(--shadow);padding:10px 10px 12px;border:1px solid rgba(45,50,112,.06)}
+.cover{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:1.4}
+.cover img{width:100%;height:100%;object-fit:cover}
+.tag{position:absolute;top:8px;right:8px;color:#fff;font-size:11px;font-weight:600;padding:3px 10px;border-radius:9px}
+.t-adv{background:#2bb48a}.t-nov{background:#a35fc4}.t-mys{background:#f07a3c}.t-fan{background:#6f78d8}
+.book h3{font-size:15px;margin:12px 4px 2px;font-weight:700}
+.book .author{font-size:12px;color:var(--muted);margin:0 4px 8px}
+.rating{display:flex;align-items:center;gap:4px;font-size:12px;color:var(--muted);margin:0 4px 8px}
+.rating img{width:14px;height:14px}
+.avail{display:inline-block;background:var(--green);color:var(--green-t);font-size:11px;font-weight:600;padding:2px 12px;border-radius:9px;margin:0 4px 10px}
+.view{display:block;width:100%;text-align:center;background:var(--primary-soft);color:var(--navy);font-size:12px;font-weight:600;padding:9px;border-radius:9px;transition:background .2s}
+.view:hover{background:var(--primary);color:#fff}
+.arrow{position:absolute;top:36%;width:30px;height:30px;border-radius:50%;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.18);display:grid;place-items:center;z-index:3}
+.arrow img{width:16px;height:16px}
+.arrow.next{right:-8px}.arrow.prev{left:-8px}
+
+/* three columns */
+.trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px}
+.trio section{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 16px 8px}
+.trio h2{font-size:14px;font-weight:700;display:flex;align-items:center;gap:6px}
+.trio h2 img{width:20px;height:20px}
+.row{display:flex;align-items:center;gap:10px;padding:10px 0;border-top:1px solid #eeeef6;font-size:12px}
+.row .thumb{width:26px;height:36px;border-radius:5px;object-fit:cover;flex:none}
+.row .info{flex:1;min-width:0}
+.row .info b{display:block;font-size:12px}
+.row .info span{color:var(--muted);font-size:11px}
+.row .go{width:14px;height:14px;opacity:.8}
+.row .num{color:var(--muted);width:12px;text-align:center}
+.row .r{display:flex;align-items:center;gap:3px;color:var(--muted);font-size:11px}
+.row .r img{width:12px;height:12px}
+.review{display:flex;gap:10px;padding:12px 0;border-top:1px solid #eeeef6}
+.review .thumb{width:38px;height:50px;border-radius:6px;object-fit:cover;flex:none}
+.review b{font-size:13px;display:block}
+.review .stars{display:flex;gap:1px;margin:2px 0}
+.review .stars img{width:15px;height:15px}
+.review p{font-size:11px;color:var(--muted);line-height:1.9}
+
+/* cta */
+.cta{position:relative;overflow:hidden;background:linear-gradient(90deg,#fdeeee,#fdf3ee 60%,#fdeaea);border-radius:var(--radius);display:flex;align-items:center;justify-content:space-between;padding:20px 40px;min-height:90px;gap:20px}
+.cta .txt{text-align:center;color:#3a3a66}
+.cta .txt b{display:block;font-size:15px}
+.cta .txt span{font-size:15px;font-weight:600}
+.cta .txt img{width:14px;margin:6px auto 0}
+.cta .btn{order:-1;background:var(--primary);color:#fff;display:flex;align-items:center;gap:10px;padding:12px 24px;border-radius:12px;font-size:13px;font-weight:600;position:relative;z-index:2}
+.cta .btn img{width:16px;height:16px}
+.cta .deco{position:absolute;bottom:0;left:0;height:100%;width:200px;object-fit:cover;-webkit-mask-image:linear-gradient(to right,#000 55%,transparent);mask-image:linear-gradient(to right,#000 55%,transparent)}
+.cta .deco2{position:absolute;bottom:0;left:38%;height:70%}
+
+@media(max-width:1000px){
+  .cats{grid-template-columns:repeat(3,1fr)}
+  .trio{grid-template-columns:1fr}
+  .topnav,.topsearch{display:none}
+  .topbar{justify-content:flex-end}
+  .hero{padding:26px 24px}.hero-text{width:100%}.hero h1{font-size:22px}
+  .hero-img{opacity:.25;width:100%}
+  .book{flex-basis:70%}
+}
+@media(max-width:640px){
+  .sidebar{position:fixed;bottom:0;top:auto;right:0;left:0;width:100%;height:auto;flex-direction:row;padding:6px;z-index:50}
+  .sidebar .logo,.side-note{display:none}
+  .sidebar nav{flex-direction:row;justify-content:space-around}
+  .sidebar nav a{flex-direction:column;gap:2px;font-size:10px;padding:6px}
+  .main{padding-bottom:80px}
+  .cta{flex-direction:column;gap:14px;padding:20px}
+  .cta .deco,.cta .deco2{display:none}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <img class="logo" src="icons/logo.svg" alt="کتابخانه">
+  <nav aria-label="منوی اصلی">
+    <a href="#" class="active"><img src="icons/home.svg" alt="">خانه</a>
+    <a href="#"><img src="icons/search.svg" alt="">جستجوی کتاب</a>
+    <a href="#"><img src="icons/book-open.svg" alt="">امانت‌های من</a>
+    <a href="#"><img src="icons/star-outline.svg" alt="">پیشنهاد کتاب</a>
+    <a href="#"><img src="icons/trophy.svg" alt="">چالش‌ها</a>
+    <a href="#"><img src="icons/map-pin.svg" alt="">نقشه کتابخانه</a>
+    <a href="#"><img src="icons/user.svg" alt="">پروفایل</a>
+  </nav>
+  <div class="side-note">
+    <img src="images/sidebar-plant.jpg" alt="">
+    کتاب‌ها<br>دوستانی هستند<br>که هیچ‌گاه<br>ما را ترک نمی‌کنند.
+    <div><img src="icons/heart.svg" alt="" style="width:16px;margin:6px auto 0;mix-blend-mode:normal;border-radius:0"></div>
+  </div>
+</aside>
+
+<div class="main">
+  <header class="topbar">
+    <nav class="topnav" aria-label="منوی بالا">
+      <a href="#" class="active">خانه</a><a href="#">کتاب‌ها</a><a href="#">دسته‌بندی‌ها</a>
+      <a href="#">امانت‌ها</a><a href="#">چالش‌ها</a><a href="#">درباره ما</a>
+    </nav>
+    <input class="topsearch" type="search" placeholder="کتاب، نویسنده یا موضوع..." aria-label="جستجو">
+    <button class="icon-btn" id="themeBtn" aria-label="تغییر حالت تاریک"><img src="icons/moon.svg" alt=""></button>
+    <button class="icon-btn" aria-label="اعلان‌ها"><img src="icons/bell.svg" alt=""><span class="badge">۲</span></button>
+    <div class="avatar" aria-label="پروفایل">👩</div>
+  </header>
+
+  <div class="hero">
+    <div class="hero-text">
+      <h1><img src="icons/book-open-white.svg" alt="">به کتابخانه مدرسه خوش آمدی!</h1>
+      <svg class="underline" viewBox="0 0 140 8"><path d="M2 5C30 1 70 1 138 3" stroke="#f5b301" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+      <p>هر کتاب، شروع یک ماجراجویی تازه است.</p>
+      <form role="search" onsubmit="return false">
+        <input type="search" placeholder="نام کتاب، نویسنده یا موضوع مورد نظر را وارد کنید..." aria-label="جستجوی کتاب">
+        <button type="submit" aria-label="جستجو"><img src="icons/search-primary.svg" alt=""></button>
+      </form>
+    </div>
+    <img class="hero-img" src="images/hero-reading-girl.jpg" alt="دختری که کتاب می‌خواند">
+  </div>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2><img src="icons/book-open-primary.svg" alt="">دسته‌بندی کتاب‌ها</h2>
+      <a class="see-all" href="#"><img src="icons/chevron-small-primary.svg" alt="">مشاهده همه</a>
+    </div>
+    <div class="cats">
+      <a href="#" class="cat pink"><img src="icons/story-book.svg" alt="">داستانی</a>
+      <a href="#" class="cat green"><img src="icons/mountains.svg" alt="">ماجراجویی</a>
+      <a href="#" class="cat yellow"><img src="icons/castle.svg" alt="">تاریخی</a>
+      <a href="#" class="cat blue"><img src="icons/flask.svg" alt="">علمی</a>
+      <a href="#" class="cat orange"><img src="icons/magnifier.svg" alt="">معمایی</a>
+      <a href="#" class="cat purple"><img src="icons/wand.svg" alt="">فانتزی</a>
+    </div>
+  </section>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2><img src="icons/star-gold.svg" alt="">کتاب‌های پیشنهادی</h2>
+      <a class="see-all" href="#"><img src="icons/chevron-small-primary.svg" alt="">مشاهده همه</a>
+    </div>
+    <div class="carousel">
+      <button class="arrow next" id="nextBtn" aria-label="بعدی"><img src="icons/chevron-left.svg" alt=""></button>
+      <button class="arrow prev" id="prevBtn" aria-label="قبلی"><img src="icons/chevron-right.svg" alt=""></button>
+      <div class="books" id="books">
+        <article class="book"><div class="cover"><img src="images/cover-treasure-island.jpg" alt=""><span class="tag t-adv">ماجراجویی</span></div>
+          <h3>جزیره‌ی گنج</h3><p class="author">رابرت لوئیس استیونسون</p>
+          <div class="rating"><img src="icons/star-gold.svg" alt="">۴.۳</div><span class="avail">موجود</span><a class="view" href="#">مشاهده کتاب</a></article>
+        <article class="book"><div class="cover"><img src="images/cover-love-rules.jpg" alt=""><span class="tag t-nov">داستانی</span></div>
+          <h3>ملت عشق</h3><p class="author">الیف شافاک</p>
+          <div class="rating"><img src="icons/star-gold.svg" alt="">۴.۶</div><span class="avail">موجود</span><a class="view" href="#">مشاهده کتاب</a></article>
+        <article class="book"><div class="cover"><img src="images/cover-seven-sins.jpg" alt=""><span class="tag t-mys">معمایی</span></div>
+          <h3>هفت گناه</h3><p class="author">آگاتا کریستی</p>
+          <div class="rating"><img src="icons/star-gold.svg" alt="">۴.۵</div><span class="avail">موجود</span><a class="view" href="#">مشاهده کتاب</a></article>
+        <article class="book"><div class="cover"><img src="images/cover-little-prince.jpg" alt=""><span class="tag t-fan">فانتزی</span></div>
+          <h3>شازده کوچولو</h3><p class="author">آنتوان دو سنت اگزوپری</p>
+          <div class="rating"><img src="icons/star-gold.svg" alt="">۴.۸</div><span class="avail">موجود</span><a class="view" href="#">مشاهده کتاب</a></article>
+      </div>
+    </div>
+  </section>
+
+  <div class="trio">
+    <section>
+      <div class="panel-head"><h2><img src="icons/flame-red.svg" alt="">محبوب‌ترین کتاب‌ها</h2><a class="see-all" href="#"><img src="icons/chevron-small-primary.svg" alt="">مشاهده همه</a></div>
+      <a href="#" class="row"><span class="num">۱</span><img class="thumb" src="images/cover-little-prince.jpg" alt=""><span class="info"><b>شازده کوچولو</b></span><span class="r"><img src="icons/star-gold.svg" alt="">۴.۸</span><img class="go" src="icons/chevron-small-gray.svg" alt=""></a>
+      <a href="#" class="row"><span class="num">۲</span><img class="thumb" src="images/cover-seven-sins.jpg" alt=""><span class="info"><b>هری پاتر و سنگ جادو</b></span><span class="r"><img src="icons/star-gold.svg" alt="">۴.۷</span><img class="go" src="icons/chevron-small-gray.svg" alt=""></a>
+      <a href="#" class="row"><span class="num">۳</span><img class="thumb" src="images/cover-love-rules.jpg" alt=""><span class="info"><b>ملت عشق</b></span><span class="r"><img src="icons/star-gold.svg" alt="">۴.۶</span><img class="go" src="icons/chevron-small-gray.svg" alt=""></a>
+      <a href="#" class="row"><span class="num">۴</span><img class="thumb" src="images/cover-seven-sins.jpg" alt=""><span class="info"><b>کیمیاگر</b></span><span class="r"><img src="icons/star-gold.svg" alt="">۴.۵</span><img class="go" src="icons/chevron-small-gray.svg" alt=""></a>
+      <a href="#" class="row"><span class="num">۵</span><img class="thumb" src="images/cover-treasure-island.jpg" alt=""><span class="info"><b>دنیای سوفی</b></span><span class="r"><img src="icons/star-gold.svg" alt="">۴.۳</span><img class="go" src="icons/chevron-small-gray.svg" alt=""></a>
+    </section>
+    <section>
+      <div class="panel-head"><h2><img src="icons/sparkles-purple.svg" alt="">تازه‌های کتابخانه</h2><a class="see-all" href="#"><img src="icons/chevron-small-primary.svg" alt="">مشاهده همه</a></div>
+      <a href="#" class="row"><img class="thumb" src="images/cover-love-rules.jpg" alt=""><span class="info"><b>کتاب: «شهر برنجی‌ها»</b><span>نویسنده: احمد اکبرپور</span></span><img class="go" src="icons/chevron-small-gray.svg" alt=""></a>
+      <a href="#" class="row"><img class="thumb" src="images/cover-seven-sins.jpg" alt=""><span class="info"><b>کتاب: «سفر به مرکز زمین»</b><span>نویسنده: ژول ورن</span></span><img class="go" src="icons/chevron-small-gray.svg" alt=""></a>
+      <a href="#" class="row"><img class="thumb" src="images/cover-love-rules.jpg" alt=""><span class="info"><b>«نطر»</b><span>نویسنده: پاتریک زوسکیند</span></span><img class="go" src="icons/chevron-small-gray.svg" alt=""></a>
+      <a href="#" class="row"><img class="thumb" src="images/cover-treasure-island.jpg" alt=""><span class="info"><b>کتاب: «کیمیاگر»</b><span>نویسنده: پائولو کوئیلیو</span></span><img class="go" src="icons/chevron-small-gray.svg" alt=""></a>
+    </section>
+    <section>
+      <div class="panel-head"><h2><img src="icons/chat.svg" alt="">آخرین نقدها و معرفی‌ها</h2><a class="see-all" href="#"><img src="icons/chevron-small-primary.svg" alt="">مشاهده همه</a></div>
+      <div class="review"><img class="thumb" src="images/cover-seven-sins.jpg" alt="">
+        <div><b>مینا رضایی</b><div class="stars"><img src="icons/star-gold.svg" alt=""><img src="icons/star-gold.svg" alt=""><img src="icons/star-gold.svg" alt=""><img src="icons/star-gold.svg" alt=""><img src="icons/star-gold.svg" alt=""></div>
+        <p>این کتاب رو پیشنهاد می‌کنم چون داستانش خیلی جذاب و پر از اتفاقات غیرمنتظره بود.</p></div></div>
+      <div class="review"><img class="thumb" src="images/cover-little-prince.jpg" alt="">
+        <div><b>علی محمدی</b><div class="stars"><img src="icons/star-gold.svg" alt=""><img src="icons/star-gold.svg" alt=""><img src="icons/star-gold.svg" alt=""><img src="icons/star-gold.svg" alt=""><img src="icons/star-empty.svg" alt=""></div>
+        <p>یک کتاب علمی فوق‌العاده که دید منو به دنیا عوض کرد.</p></div></div>
+    </section>
+  </div>
+
+  <div class="cta">
+    <img class="deco" src="images/footer-books-left.jpg" alt="">
+    <div class="txt" style="position:relative;z-index:2;margin-inline:auto;order:0"><b>هر صفحه از کتاب،</b><span>یک قدم به سوی آینده روشن‌تر است.</span><img src="icons/heart.svg" alt=""></div>
+    <a class="btn" href="#"><img src="icons/arrow-left-white.svg" alt="">پیوستن به چالش کتاب‌خوانی</a>
+  </div>
+</div>
+
+<script>
+const books=document.getElementById('books');
+document.getElementById('nextBtn').onclick=()=>books.scrollBy({left:-books.clientWidth*.6,behavior:'smooth'});
+document.getElementById('prevBtn').onclick=()=>books.scrollBy({left:books.clientWidth*.6,behavior:'smooth'});
+document.getElementById('themeBtn').onclick=()=>document.body.classList.toggle('dark');
+</script>
+</body>
+  </html>
