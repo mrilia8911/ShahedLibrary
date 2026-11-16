@@ -1,4 +1,4 @@
-/* ================= UI ================= */
+
 const $=s=>document.querySelector(s),fa=n=>Number(n).toLocaleString('fa-IR'),dt=d=>d?new Date(d).toLocaleDateString('fa-IR'):'—',esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const S={user:null,q:'',cat:'',cover:null,edit:null,role:'student'};try{const s=JSON.parse(sessionStorage.getItem('u'));if(s){S.user=s.u;API.token=s.t}}catch(e){}
 const ST={pending:['در انتظار تأیید','wa'],active:['امانت فعال','in'],rejected:['رد شده','no'],returned:['بازگردانده شد',''],cancelled:['لغو شده','no']};
