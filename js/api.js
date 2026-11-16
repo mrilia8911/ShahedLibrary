@@ -1,4 +1,4 @@
-/* ============ API CONTRACT (برای تیم بک‌اند) ============
+/*API CONTRACT (برای تیم بک‌اند)
  همه‌ی درخواست‌ها JSON هستند و هدر Authorization: Bearer <token> دارند، به جز ثبت/ویرایش کتاب که multipart/form-data است.
  POST   /auth/login        {code,password,role}                       -> {token,user:{id,name,code,role,grade}}
  GET    /categories                                                   -> [{id,name,icon}]
